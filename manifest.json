@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub ⇄ Graphite",
+  "version": "1.0",
+  "description": "Switch a pull request between GitHub and Graphite.",
+  "permissions": ["activeTab"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_title": "Switch between GitHub and Graphite" },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": { "default": "Alt+Shift+G" },
+      "description": "Switch between GitHub and Graphite"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*",
+        "https://app.graphite.dev/*",
+        "https://app.graphite.com/*"
+      ],
+      "js": ["switch.js", "content.js"]
+    }
+  ]
+}
