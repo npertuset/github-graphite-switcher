@@ -29,17 +29,34 @@ const link = shadow.querySelector("a");
 // page load. Check it on a timer and show or hide the link to match.
 function update() {
   const target = counterpartUrl(location.href);
-  if (!target) {
+  if (target) {
+    if (link.href !== target.url) {
+      link.href = target.url;
+      link.textContent = `Open in ${target.label}`;
+    }
+    if (!host.isConnected) document.documentElement.append(host);
+  } else {
     host.remove();
-    return;
   }
-
-  if (link.href !== target.url) {
-    link.href = target.url;
-    link.textContent = `Open in ${target.label}`;
-  }
-  if (!host.isConnected) document.documentElement.append(host);
+  reportToToolbar(target ? target.label : null);
 }
+
+// Tells background.js which toolbar icon to show for this tab, only when it
+// changes.
+let reportedLabel;
+function reportToToolbar(label) {
+  if (label === reportedLabel) return;
+  reportedLabel = label;
+  chrome.runtime.sendMessage({ label });
+}
+
+// A page restored from the back/forward cache keeps this script's state, but
+// Chrome has reset the tab's icon, so report again.
+window.addEventListener("pageshow", (event) => {
+  if (!event.persisted) return;
+  reportedLabel = undefined;
+  update();
+});
 
 // Refresh again right as the link is used, so a click just after moving to
 // another page doesn't open the PR you came from.
