@@ -3,7 +3,7 @@
   "name": "GitHub ⇄ Graphite",
   "version": "1.0",
   "description": "Switch a pull request between GitHub and Graphite.",
-  "permissions": ["activeTab"],
+  "permissions": ["activeTab", "declarativeContent"],
   "background": { "service_worker": "background.js" },
   "action": { "default_title": "Switch between GitHub and Graphite" },
   "commands": {
