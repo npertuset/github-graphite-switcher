@@ -41,5 +41,13 @@ function update() {
   if (!host.isConnected) document.documentElement.append(host);
 }
 
+// Refresh again right as the link is used, so a click just after moving to
+// another page doesn't open the PR you came from.
+link.addEventListener("pointerdown", update);
+link.addEventListener("click", (event) => {
+  update();
+  if (!host.isConnected) event.preventDefault();
+});
+
 update();
 setInterval(update, 500);
