@@ -2,7 +2,7 @@
 
 A small Chrome extension that switches a pull request between GitHub and Graphite.
 
-![Clicking the button moves a pull request from GitHub to Graphite and back](docs/demo.gif)
+![Clicking the button moves a pull request from GitHub to Graphite, and clicking the toolbar icon moves it back](docs/demo.gif)
 
 *Logged out here, so Graphite shows its login page.*
 
